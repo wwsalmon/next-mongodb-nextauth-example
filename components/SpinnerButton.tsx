@@ -25,11 +25,15 @@ export default function SpinnerButton({children, href, onClick, className, isLoa
         <div className="relative inline-block">
             {href ? (
                 <Button href={href} className={className} disabled={disabled || isLoading}>
-                    {children}
+                    <div className={isLoading ? "invisible" : ""}>
+                        {children}
+                    </div>
                 </Button>
             ) : (
                 <Button onClick={onClick} className={className} disabled={disabled || isLoading}>
-                    {children}
+                    <div className={isLoading ? "invisible" : ""}>
+                        {children}
+                    </div>
                 </Button>
             )}
             {isLoading && <div className="spinner"/>}
