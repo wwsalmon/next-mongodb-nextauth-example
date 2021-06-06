@@ -16,11 +16,10 @@ export default function SignIn({notAllowed}: {notAllowed: boolean}) {
         <>
             <SEO title="Sign in"/>
             <h1>Sign in</h1>
-            <hr/>
             {notAllowed && (
                 <span>No account found for the given email. <Link href="/"><a>Sign up for the waitlist</a></Link> to get early access</span>
             )}
-            <p>If you already have a Postulate account, click below to sign in.</p>
+            <p>If you already have a YourApp account, click below to sign in.</p>
             <SignInButton/>
         </>
     );

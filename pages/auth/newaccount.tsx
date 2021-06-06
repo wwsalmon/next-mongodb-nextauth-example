@@ -17,7 +17,7 @@ export default function NewAccount({}: {  }) {
     function onSubmit() {
         setIsLoading(true);
 
-        axios.post("/api/account", {
+        axios.post("/api/auth/account", {
             username: username,
         }).then(res => {
             if (res.data.error) {
@@ -25,7 +25,7 @@ export default function NewAccount({}: {  }) {
                 setIsLoading(false);
             } else {
                 console.log("redirecting...");
-                signIn("google").then(() => router.push("/projects")).catch(e => console.log(e));
+                signIn("google").then(() => router.push("/app")).catch(e => console.log(e));
             }
         }).catch(e => {
             setIsLoading(false);
@@ -86,7 +86,7 @@ export const getServerSideProps: GetServerSideProps = async (context) => {
     const session = await getSession(context);
 
     if (!session || session.userId) {
-        context.res.setHeader("location", session ? "/app" : "/auth/SignIn");
+        context.res.setHeader("location", session ? "/app" : "/auth/signin");
         context.res.statusCode = 302;
         context.res.end();
     }
