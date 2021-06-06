@@ -1,11 +1,9 @@
-import NextAuth, {InitOptions} from "next-auth";
+import NextAuth from "next-auth";
 import Providers from "next-auth/providers";
-import {NextApiRequest, NextApiResponse} from "next";
 import {UserModel} from "../../../models/User";
-import {SessionObj} from "../../../utils/types";
 import dbConnect from "../../../utils/dbConnect";
 
-const options: InitOptions = {
+export default NextAuth({
     providers: [
         Providers.Google({
             clientId: process.env.GOOGLE_CLIENT_ID,
@@ -13,26 +11,23 @@ const options: InitOptions = {
         }),
     ],
     callbacks: {
-        session: async (session, user) => {
+        async session(session, user) {
             await dbConnect();
 
-            const foundUser = await UserModel.findOne({ email: user.email }).exec();
+            const foundUser: any = await UserModel.findOne({ email: user.email }).exec();
 
-            let newSession: SessionObj = {
+            let newSession = {
                 ...session,
                 userId: "",
                 username: "",
             }
 
             if (foundUser) {
-                newSession.userId = foundUser._id;
+                newSession.userId = foundUser._id.toString();
                 newSession.username = foundUser.username;
-                newSession.featuredProjects = foundUser.featuredProjects;
             }
 
             return newSession;
         },
     }
-};
-
-export default (req: NextApiRequest, res: NextApiResponse) => NextAuth(req, res, options);
+});
