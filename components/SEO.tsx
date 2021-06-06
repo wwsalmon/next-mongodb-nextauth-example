@@ -1,7 +1,7 @@
 import {NextSeo} from "next-seo";
 import {useRouter} from "next/router";
 
-export default function UpSEO({
+export default function SEO({
                                   title = "NextJS starter: save hours of boilerplate setup",
                                   description = "next-mongodb-nextauth-example allows you to skip hours of boilerplate setup with a single command when developing your app.",
                                   imgUrl = null,
