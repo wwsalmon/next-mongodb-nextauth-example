@@ -31,10 +31,8 @@ export const getServerSideProps: GetServerSideProps = async (context) => {
     if (session && !session.userId) return {props: {notAllowed: true}};
 
     if (session && session.userId) {
-        context.res.setHeader("location", "/app");
-        context.res.statusCode = 302;
-        context.res.end();
+        return {redirect: {permanent: false, destination: "/app",}};
+    } else {
+        return {props: {notAllowed: false}};
     }
-
-    return {props: {notAllowed: false}};
 };
