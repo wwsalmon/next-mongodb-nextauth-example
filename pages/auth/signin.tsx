@@ -4,8 +4,9 @@ import {useEffect} from "react";
 import Link from "next/link";
 import SEO from "../../components/SEO";
 import SignInButton from "../../components/SignInButton";
+import {UserModel} from "../../models/User";
 
-export default function SignIn({notAllowed}: {notAllowed: boolean}) {
+export default function SignIn({notAllowed}: { notAllowed: boolean }) {
     const [session, loading] = useSession();
 
     useEffect(() => {
@@ -28,11 +29,13 @@ export default function SignIn({notAllowed}: {notAllowed: boolean}) {
 export const getServerSideProps: GetServerSideProps = async (context) => {
     const session = await getSession(context);
 
-    if (session && !session.userId) return {props: {notAllowed: true}};
+    if (!session) return {props: {}};
 
-    if (session && session.userId) {
-        return {redirect: {permanent: false, destination: "/app",}};
-    } else {
-        return {props: {notAllowed: false}};
+    try {
+        const thisUser = await UserModel.findOne({email: session.user.email});
+        return thisUser ? {redirect: {permanent: false, destination: "/app"}} : {props: {notAllowed: true}};
+    } catch (e) {
+        console.log(e);
+        return {notFound: true};
     }
 };

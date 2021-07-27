@@ -2,8 +2,9 @@ import {GetServerSideProps} from "next";
 import {getSession} from "next-auth/client";
 import SEO from "../../components/SEO";
 import SignInButton from "../../components/SignInButton";
+import {UserModel} from "../../models/User";
 
-export default function Welcome({}: {  }) {
+export default function Welcome({}: {}) {
     return (
         <>
             <SEO title="Sign up"/>
@@ -17,7 +18,13 @@ export default function Welcome({}: {  }) {
 export const getServerSideProps: GetServerSideProps = async (context) => {
     const session = await getSession(context);
 
-    if (session) return {redirect: {permanent: false, destination: session.userId ? "/app" : "/auth/newaccount",}};
+    if (!session) return {props: {}};
 
-    return {props: {}};
+    try {
+        const thisUser = await UserModel.findOne({email: session.user.email});
+        return {redirect: {permanent: false, destination: thisUser ? "/app" : "/auth/newaccount"}};
+    } catch (e) {
+        console.log(e);
+        return {notFound: true};
+    }
 };

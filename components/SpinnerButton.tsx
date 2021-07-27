@@ -36,7 +36,7 @@ export default function SpinnerButton({children, href, onClick, className, isLoa
                     </div>
                 </Button>
             )}
-            {isLoading && <div className="spinner"/>}
+            {isLoading && <div className="up-spinner"/>}
         </div>
     )
 }

@@ -6,8 +6,9 @@ import {useState} from "react";
 import SEO from "../../components/SEO";
 import Skeleton from "react-loading-skeleton";
 import SpinnerButton from "../../components/SpinnerButton";
+import {UserModel} from "../../models/User";
 
-export default function NewAccount({}: {  }) {
+export default function NewAccount({}: {}) {
     const router = useRouter();
     const [session, loading] = useSession();
     const [username, setUsername] = useState<string>("");
@@ -62,7 +63,7 @@ export default function NewAccount({}: {  }) {
                     onChange={e => {
                         setUsername(e.target.value);
                         if (e.target.value !== encodeURIComponent(e.target.value)) {
-                            setError("URLs cannot contain spaces or special characters.")
+                            setError("URLs cannot contain spaces or special characters.");
                         }
                         setError(null);
                     }}
@@ -85,7 +86,13 @@ export default function NewAccount({}: {  }) {
 export const getServerSideProps: GetServerSideProps = async (context) => {
     const session = await getSession(context);
 
-    if (!session || session.userId) return {redirect: {permanent: false, destination: session ? "/app" : "/auth/signin",}};
+    if (!session) return {redirect: {permanent: false, destination: "/auth/signin"}};
 
-    return {props: {}};
+    try {
+        const thisUser = await UserModel.findOne({email: session.user.email});
+        return thisUser ? {redirect: {permanent: false, destination: "/app"}} : {props: {}};
+    } catch (e) {
+        console.log(e);
+        return {notFound: true};
+    }
 };

@@ -6,7 +6,7 @@ import dbConnect from "../../../utils/dbConnect";
 export default async function handler(req: NextApiRequest, res: NextApiResponse) {
     switch (req.method) {
         case "POST":
-            const session = await getSession({ req });
+            const session = await getSession({req});
             if (!session) return res.status(403);
             if (session.userId) return res.status(200).json({message: "Account already exists"});
 
