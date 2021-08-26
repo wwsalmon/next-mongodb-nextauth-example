@@ -7,6 +7,7 @@ import SEO from "../../components/SEO";
 import Skeleton from "react-loading-skeleton";
 import SpinnerButton from "../../components/SpinnerButton";
 import {UserModel} from "../../models/User";
+import dbConnect from "../../utils/dbConnect";
 
 export default function NewAccount({}: {}) {
     const router = useRouter();
@@ -89,6 +90,7 @@ export const getServerSideProps: GetServerSideProps = async (context) => {
     if (!session) return {redirect: {permanent: false, destination: "/auth/signin"}};
 
     try {
+        await dbConnect();
         const thisUser = await UserModel.findOne({email: session.user.email});
         return thisUser ? {redirect: {permanent: false, destination: "/app"}} : {props: {}};
     } catch (e) {

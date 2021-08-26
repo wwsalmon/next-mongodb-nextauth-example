@@ -5,6 +5,7 @@ import Link from "next/link";
 import SEO from "../../components/SEO";
 import SignInButton from "../../components/SignInButton";
 import {UserModel} from "../../models/User";
+import dbConnect from "../../utils/dbConnect";
 
 export default function SignIn({notAllowed}: { notAllowed: boolean }) {
     const [session, loading] = useSession();
@@ -32,6 +33,7 @@ export const getServerSideProps: GetServerSideProps = async (context) => {
     if (!session) return {props: {}};
 
     try {
+        await dbConnect();
         const thisUser = await UserModel.findOne({email: session.user.email});
         return thisUser ? {redirect: {permanent: false, destination: "/app"}} : {props: {notAllowed: true}};
     } catch (e) {
