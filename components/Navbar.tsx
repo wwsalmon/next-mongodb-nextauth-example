@@ -1,6 +1,6 @@
 import {useSession} from "next-auth/client";
 import Button from "./Button";
-import Container from "./Container";
+import Container from "./headless/Container";
 import {useRouter} from "next/router";
 
 export default function Navbar() {
