@@ -1,4 +1,4 @@
-import Button from "./Button";
+import Button from "./headless/Button";
 import {FaGoogle} from "react-icons/fa";
 import {signIn} from "next-auth/client";
 
