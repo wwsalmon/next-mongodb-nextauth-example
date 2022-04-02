@@ -1,5 +1,5 @@
 import {useSession} from "next-auth/client";
-import Button from "./Button";
+import Button from "./headless/Button";
 import Container from "./headless/Container";
 import {useRouter} from "next/router";
 
