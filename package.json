@@ -8,8 +8,6 @@
     "start": "next start"
   },
   "dependencies": {
-    "@types/mongoose": "^5.11.97",
-    "@types/next-auth": "^3.15.0",
     "@types/react": "^17.0.43",
     "axios": "^0.26.1",
     "date-fns": "^2.28.0",
