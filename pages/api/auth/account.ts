@@ -1,6 +1,6 @@
-import {UserModel} from "../../../models/User";
+import {UserModel} from "../../../models/user";
 import {NextApiRequest, NextApiResponse} from "next";
-import {getSession} from "next-auth/client";
+import {getSession} from "next-auth/react";
 import dbConnect from "../../../utils/dbConnect";
 
 export default async function handler(req: NextApiRequest, res: NextApiResponse) {
