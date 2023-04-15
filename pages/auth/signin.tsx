@@ -18,10 +18,6 @@ export const getServerSideProps: GetServerSideProps = async (context) => {
 
         if (!session) return {props: {}};
 
-        const thisUser = await getThisUser(context);
-
-        if (!thisUser) return ssrRedirect("/auth/newaccount");
-
         return ssrRedirect("/app");
     }
     catch (e) {
