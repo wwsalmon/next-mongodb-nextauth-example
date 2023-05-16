@@ -35,10 +35,12 @@ export default function Comment({comment, post, thisUser, setIterAbove, parentId
             parentId: parentId || comment._id,
         }).then(() => {
             setIterAbove(prev => prev + 1);
+            setReplyOpen(false);
+            setBody("");
         }).catch(e => {
             console.log(e);
         }).finally(() => {
-            setIsLoading(false)
+            setIsLoading(false);
         });
     }
 
