@@ -1,6 +1,6 @@
 import {useSession} from "next-auth/react";
-import Button from "./headless/Button";
 import {useRouter} from "next/router";
+import Link from "next/link";
 
 export default function Navbar() {
     const {data: session} = useSession();
@@ -17,7 +17,7 @@ export default function Navbar() {
                         className="w-8 h-8 rounded-full"
                     />
                 ) : (
-                    <Button href="/auth/signin">Sign in</Button>
+                    <Link href="/auth/signin">Sign in</Link>
                 )}
             </div>
         </div>

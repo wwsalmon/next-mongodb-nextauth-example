@@ -6,11 +6,9 @@ general stuff:
 - Typescript and TailwindCSS
 - `_document.tsx`
 - nprogress
-- toasts
 - SEO component
-- Button and modal components
+- Modal component
 - Mongoose/MongoDB
-- SWR with `fetcher.ts`
   
 mongodb/api stuff:
 - `nextApiEndpoint.ts`
@@ -19,7 +17,7 @@ mongodb/api stuff:
 - `getThisUser.ts`
 - `UserModel`
 - [NextAuth](https://next-auth.js.org/) with UserModel integration
-- Basic auth flow screens
+- Account creation, sign in and sign out
 
 To use, run `npx create-next-app -e https://github.com/wwsalmon/next-mongodb-nextauth-example`, then create a `.env`
 file with the following variables:

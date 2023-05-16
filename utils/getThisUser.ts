@@ -5,7 +5,7 @@ import dbConnect from "./dbConnect";
 import { Session } from "next-auth";
 
 export default async function getThisUser(context: GetServerSidePropsContext, session?: Session) {
-    const thisSession = session || await getSession(context);
+    const thisSession = session || (await getSession(context));
 
     if (thisSession) {
         await dbConnect();

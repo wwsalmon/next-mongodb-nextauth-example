@@ -1,5 +1,11 @@
 import mongoose, {Model} from "mongoose";
-import {UserObj} from "../utils/types";
+
+export interface UserObj {
+    email: string,
+    username: string,
+    name: string,
+    image: string,
+}
 
 const UserSchema = new mongoose.Schema({
     email: { required: true, type: String },

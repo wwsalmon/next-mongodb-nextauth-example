@@ -1,13 +1,16 @@
 import {GetServerSideProps} from "next";
-import getThisUser from "../../utils/getThisUser";
 import {ssrRedirect} from "next-response-helpers";
-import SignInButton from "../../components/SignInButton";
-import {getSession} from "next-auth/react";
+import {getSession, signIn} from "next-auth/react";
+import {FaGoogle} from "react-icons/fa";
 
 export default function SignIn({}: {}) {
     return (
         <>
-            <SignInButton/>
+            <button onClick={() => signIn("google")}>
+                <div className="flex items-center">
+                    <FaGoogle/><span className="ml-2">Sign in</span>
+                </div>
+            </button>
         </>
     );
 }

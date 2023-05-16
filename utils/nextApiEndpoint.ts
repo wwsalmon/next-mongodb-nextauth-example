@@ -1,13 +1,14 @@
-import {DatedObj, UserObj} from "./types";
+import {DatedObj} from "./types";
 import {NextApiHandler, NextApiRequest, NextApiResponse} from "next";
 import {getSession} from "next-auth/react";
 import dbConnect from "./dbConnect";
-import {UserModel} from "../models/user";
+import {UserModel, UserObj} from "../models/user";
 import {res403, res405, res500} from "next-response-helpers";
-import {Session} from "next-auth";
-import {Document} from "mongoose";
+import {Session, getServerSession} from "next-auth";
+import {HydratedDocument} from "mongoose";
+import { authOptions } from "../pages/api/auth/[...nextauth]";
 
-export type MethodFunction = (req: NextApiRequest, res: NextApiResponse, session: Session, thisUser?: UserObj & Document | DatedObj<UserObj>) => any;
+export type MethodFunction = (req: NextApiRequest, res: NextApiResponse, session: Session, thisUser?: HydratedDocument<UserObj>) => any;
 
 export default function nextApiEndpoint({getFunction, postFunction, deleteFunction, allowUnAuthed}: {
     getFunction?: MethodFunction,
@@ -16,7 +17,7 @@ export default function nextApiEndpoint({getFunction, postFunction, deleteFuncti
     allowUnAuthed?: boolean,
 }): NextApiHandler {
     const handler: NextApiHandler = async (req, res) => {
-        const session = await getSession({req});
+        const session = await getServerSession(req, res, authOptions);
 
         if (!(req.method === "GET" || session || allowUnAuthed)) return res403(res);
 
