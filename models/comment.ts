@@ -4,6 +4,8 @@ export interface CommentObj {
     userId: string, // ID of making comment
     nodeId: string, // ID of update, comment, etc.
     body: string,
+    createdAt: string,
+    updatedAt: string,
 }
 
 const CommentSchema = new mongoose.Schema({
